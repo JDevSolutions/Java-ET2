@@ -50,7 +50,28 @@ public class WebController {
         return order;
     }
 
-    // add delete and update orders by id
+    @DeleteMapping("/trade/:id") //check
+    int deleteTrade(int id, @RequestParam String buyOrSell){
+        if (buyOrSell=="buy"){
+            book.deleteBuyOrder(id);
+            return 1;
+        } else if (buyOrSell=="sell") {
+            book.deleteSellOrder(id);
+            return 1;
+        }
+        return 0;
+    }
 
+    @PutMapping("/trade")
+    Order updateTrade(int id, @RequestParam String buyOrSell, @RequestParam double quantity){
+        if (buyOrSell=="buy"){
+            Order updatedOrder = book.updateBuyOrder(id, quantity);
+            return updatedOrder;
+        } else if (buyOrSell=="sell") {
+            Order updatedOrder = book.updateSellOrder(id,quantity);
+            return updatedOrder;
+        }
+        return null;
+    }
 
 }

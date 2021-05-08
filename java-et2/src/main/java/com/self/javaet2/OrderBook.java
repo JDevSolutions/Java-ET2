@@ -160,6 +160,23 @@ public class OrderBook {
         MAX_TRADE_ID = id;
     }
 
+    public void deleteBuyOrder(int id){
+        buys.deleteOrder(id);
+    }
+
+    public void deleteSellOrder(int id){
+        sells.deleteOrder(id);
+    }
+
+    public Order updateBuyOrder(int id, double quantity){
+        Order updatedOrdeer = buys.updateOrder(id,quantity);
+        return updatedOrdeer;
+    }
+
+    public Order updateSellOrder(int id, double quantity){
+        sells.updateOrder(id,quantity);
+    }
+
     public String printOrderBook() throws JsonProcessingException {
         /*
         System.out.println("ORDER BOOK");

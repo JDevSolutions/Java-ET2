@@ -56,18 +56,19 @@ public class OrderTree {
         orderMap.remove(id);
     }
 
-    public void updateOrder(int id, double quantity){
+    public Order updateOrder(int id, double quantity){
         Order order = orderMap.get(id);
         if (order == null){
-            return;
+            return null;
         }
         LinkedList<Order> priceList = priceTree.get(order.getPrice());
         for (Order curOrder : priceList){
             if (curOrder.getTradeId() == id){
                 curOrder.setQuantity(quantity);
-                break;
+                return curOrder;
             }
         }
+        return null;
     }
 
     // find max price level in the OrderTree
