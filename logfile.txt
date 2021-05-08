@@ -1,0 +1,6 @@
+Id: 7 , Buy/Sell: buy , Price: 70.0 , Quantity: 0.0 , Time: 2021-05-08T17:15:52.982Z
+Id: 4 , Buy/Sell: sell , Price: 70.0 , Quantity: 0.0 , Time: 2021-05-08T17:15:52.984Z
+Id: 8 , Buy/Sell: sell , Price: 70.0 , Quantity: 60.0 , Time: 2021-05-08T17:15:59.583Z
+Id: 4 , Buy/Sell: buy , Price: 70.0 , Quantity: 60.0 , Time: 2021-05-08T17:15:59.584Z
+Id: 9 , Buy/Sell: buy , Price: 68.0 , Quantity: 0.0 , Time: 2021-05-08T17:16:03.430Z
+Id: 6 , Buy/Sell: sell , Price: 68.0 , Quantity: 0.0 , Time: 2021-05-08T17:16:03.430Z

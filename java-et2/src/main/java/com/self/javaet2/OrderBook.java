@@ -1,5 +1,8 @@
 package com.self.javaet2;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -86,17 +89,17 @@ public class OrderBook {
         return newOrder;
     }
 
-    public void sendMarketBuyOrder(double size){
+    public Order sendMarketBuyOrder(double size){
         Order newOrder = new Order("buy", size, Double.POSITIVE_INFINITY); //limit is positive infinity as market order will "walk the book"
 
         // iterate through the book, ticking off trades that are possible, up to the size specified in the function
-        while (size > 0 && sells.getDepth() > 0){
+        while (size > 0 && sells.getDepth() > 0) {
             LinkedList<Order> curList = sells.minPriceList();
             int i = 0;
             while (i < curList.size() && size > 0) {
                 Order curOrder = curList.get(i);
                 double curQuantity = curOrder.getQuantity();
-                if (size >= curQuantity){
+                if (size >= curQuantity) {
                     size -= curOrder.getQuantity();
                     // delete order to tidy up OrderBook
                     sells.deleteOrder(curOrder.getTradeId());
@@ -112,9 +115,10 @@ public class OrderBook {
                 i++;
             }
         }
+        return newOrder;
     }
 
-    public void sendMarketSellOrder(double size){
+    public Order sendMarketSellOrder(double size){
         Order newOrder = new Order("sell", size, -Double.POSITIVE_INFINITY);
 
         while (size > 0 && buys.getDepth() > 0){
@@ -137,6 +141,7 @@ public class OrderBook {
                 i++;
             }
         }
+        return newOrder;
     }
 
     public Double findMaxBuy(){
@@ -155,29 +160,38 @@ public class OrderBook {
         MAX_TRADE_ID = id;
     }
 
-    public void printOrderBook(){
+    public String printOrderBook() throws JsonProcessingException {
+        /*
         System.out.println("ORDER BOOK");
         System.out.println("----------------------------------");
         System.out.println("BUYS:");
+        */
         TreeMap<Double, LinkedList<Order>> buysPriceTree = buys.getPriceMap();
+        /*
         for (Map.Entry<Double, LinkedList<Order>> entry: buysPriceTree.entrySet()){
             for (int i = 0; i < entry.getValue().size(); i++){
-                System.out.println("ID: "+ entry.getValue().get(i).getTradeId() + " , " + "Price: " + entry.getValue().get(i).getPrice() + " , " + "Quantity: " + entry.getValue().get(i).getQuantity());
+                //System.out.println("ID: "+ entry.getValue().get(i).getTradeId() + " , " + "Price: " + entry.getValue().get(i).getPrice() + " , " + "Quantity: " + entry.getValue().get(i).getQuantity());
             }
-            System.out.println("---------------------------------------");
+            //System.out.println("---------------------------------------");
         }
 
         System.out.println("---------------------------------------");
         System.out.println("SELLS:");
-
+        */
         TreeMap<Double, LinkedList<Order>> sellsPriceTree = sells.getPriceMap();
+        /*
         for (Map.Entry<Double, LinkedList<Order>> entry: sellsPriceTree.entrySet()){
             for (int i = 0; i < entry.getValue().size(); i++){
                 System.out.println("ID: " + entry.getValue().get(i).getTradeId() + " , " +"Price: " + entry.getValue().get(i).getPrice() + " , " + "Quantity: " + entry.getValue().get(i).getQuantity());
             }
             System.out.println("---------------------------------------");
         }
-
+        */
+        // write the order book to a json string
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBuys = mapper.writeValueAsString(buysPriceTree);
+        String jsonSells = mapper.writeValueAsString(sellsPriceTree);
+        return jsonBuys+jsonSells;
     }
 
 }
