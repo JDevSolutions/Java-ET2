@@ -1,4 +1,4 @@
-package controller;
+package com.self.javaet2.controller;
 
 import com.self.javaet2.JavaEt2Application;
 import com.self.javaet2.Order;
@@ -13,7 +13,7 @@ public class WebController {
         return;
     }
 
-    @GetMapping("/find_max_buy")
+    @GetMapping("/find_min_buy")
     Double findMinBuy(){
         Double maxBuy = JavaEt2Application.book.findMaxBuy();
         return maxBuy;
