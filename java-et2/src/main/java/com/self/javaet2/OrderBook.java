@@ -1,3 +1,5 @@
+package com.self.javaet2;
+
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -20,7 +22,7 @@ public class OrderBook {
         MAX_TRADE_ID = 0;
     }
 
-    public void sendBuyLimitOrder(double size, double limit){
+    public Order sendBuyLimitOrder(double size, double limit){
         //create new order
         Order newOrder = new Order("buy", size, limit);
 
@@ -51,9 +53,10 @@ public class OrderBook {
         if (size > 0){
             buys.addOrder(newOrder);
         }
+        return newOrder;
     }
 
-    public void sendSellLimitOrder(double size, double limit){
+    public Order sendSellLimitOrder(double size, double limit){
         Order newOrder = new Order("sell", size, limit);
 
         while (size > 0 && buys.getDepth() > 0 && buys.maxPrice() != null && buys.maxPrice() >= limit){
@@ -80,6 +83,7 @@ public class OrderBook {
         if (size > 0){
             sells.addOrder(newOrder);
         }
+        return newOrder;
     }
 
     public void sendMarketBuyOrder(double size){
