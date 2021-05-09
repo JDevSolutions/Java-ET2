@@ -1,15 +1,17 @@
-package com.self.javaet2;
+package com.self.javaet2.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.TreeMap;
 
 /* The OrderBook Class is formed from two OrderTrees, one for the buys,
  * the other for the sells.
  */
+
+@Service
 public class OrderBook {
     private static int MAX_TRADE_ID = 0; // current largest trade id, links to Order class
     private OrderTree buys = new OrderTree();

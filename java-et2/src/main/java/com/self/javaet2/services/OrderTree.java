@@ -1,4 +1,4 @@
-package com.self.javaet2;
+package com.self.javaet2.services;
 
 import java.util.HashMap;
 import java.util.LinkedList;
