@@ -26,32 +26,32 @@ public class WebController {
         return minSell;
     }
 
-    @PostMapping("/buy_limit_trade")
+    @PostMapping("/buy_limit_trades")
     Order submitBuyTrade(@RequestParam double size, @RequestParam double limit){
         Order order = book.sendBuyLimitOrder(size, limit);
         return order;
     }
 
-    @PostMapping("/sell_limit_trade")
+    @PostMapping("/sell_limit_trades")
     Order submitSellTrade(@RequestParam double size, @RequestParam double limit){
         Order order = book.sendSellLimitOrder(size, limit);
         return order;
     }
 
-    @PostMapping("/buy_market_trade")
+    @PostMapping("/buy_market_trades")
     Order submitBuyMarketTrade(@RequestParam double size){
         Order order = book.sendMarketBuyOrder(size);
         return order;
     }
 
-    @PostMapping("/sell_market_trade")
+    @PostMapping("/sell_market_trades")
     Order submitSellMarketTrade(@RequestParam double size){
         Order order = book.sendMarketSellOrder(size);
         return order;
     }
 
-    @DeleteMapping("/trade/:id") //check
-    int deleteTrade(int id, @RequestParam String buyOrSell){
+    @DeleteMapping("/trades/{id}") //check
+    int deleteTrade(@PathVariable int id, @RequestParam String buyOrSell){
         if (buyOrSell=="buy"){
             book.deleteBuyOrder(id);
             return 1;
@@ -62,8 +62,8 @@ public class WebController {
         return 0;
     }
 
-    @PutMapping("/trade")
-    Order updateTrade(int id, @RequestParam String buyOrSell, @RequestParam double quantity){
+    @PutMapping("/trades/{id}")
+    Order updateTrade(@PathVariable int id, @RequestParam String buyOrSell, @RequestParam double quantity){
         if (buyOrSell=="buy"){
             Order updatedOrder = book.updateBuyOrder(id, quantity);
             return updatedOrder;
