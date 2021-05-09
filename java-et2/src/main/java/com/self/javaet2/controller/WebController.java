@@ -50,7 +50,7 @@ public class WebController {
         return order;
     }
 
-    @DeleteMapping("/trades/{id}") //check
+    @DeleteMapping("/trades/{id}")
     int deleteTrade(@PathVariable int id, @RequestParam String buyOrSell){
         if (buyOrSell=="buy"){
             book.deleteBuyOrder(id);
