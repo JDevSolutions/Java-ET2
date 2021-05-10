@@ -171,12 +171,13 @@ public class OrderBook {
     }
 
     public Order updateBuyOrder(int id, double quantity){
-        Order updatedOrdeer = buys.updateOrder(id,quantity);
-        return updatedOrdeer;
+        Order updatedOrder = buys.updateOrder(id,quantity);
+        return updatedOrder;
     }
 
     public Order updateSellOrder(int id, double quantity){
-        sells.updateOrder(id,quantity);
+        Order updatedOrder = sells.updateOrder(id,quantity);
+        return updatedOrder;
     }
 
     public String printOrderBook() throws JsonProcessingException {

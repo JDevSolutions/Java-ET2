@@ -2,11 +2,16 @@ package com.self.javaet2.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.self.javaet2.services.Order;
+import com.self.javaet2.services.OrderBook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import static com.self.javaet2.JavaEt2Application.book;
+
 
 @RestController
 public class WebController {
+
+    @Autowired
+    private OrderBook book;
 
     @GetMapping("/trades")
     String printOrderBook() throws JsonProcessingException {
