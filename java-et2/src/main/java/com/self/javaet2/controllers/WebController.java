@@ -12,6 +12,7 @@ public class WebController {
 
     @Autowired
     private OrderBook book;
+    private Object Exception;
 
     @GetMapping("/trades")
     String printOrderBook() throws JsonProcessingException {
@@ -19,40 +20,41 @@ public class WebController {
         return orderBookString;
     }
 
-    @GetMapping("/min_buy")
+    @GetMapping("/trades/min_buy")
     Double findMinBuy(){
         Double maxBuy = book.findMaxBuy();
         return maxBuy;
     }
 
-    @GetMapping("/max_sell")
+    @GetMapping("/trades/max_sell")
     Double findMaxSell(){
         Double minSell = book.findMinSell();
         return minSell;
     }
 
-    @PostMapping("/buy_limit_trades")
-    Order submitBuyTrade(@RequestParam double size, @RequestParam double limit){
-        Order order = book.sendBuyLimitOrder(size, limit);
-        return order;
-    }
-
-    @PostMapping("/sell_limit_trades")
-    Order submitSellTrade(@RequestParam double size, @RequestParam double limit){
-        Order order = book.sendSellLimitOrder(size, limit);
-        return order;
-    }
-
-    @PostMapping("/buy_market_trades")
-    Order submitBuyMarketTrade(@RequestParam double size){
-        Order order = book.sendMarketBuyOrder(size);
-        return order;
-    }
-
-    @PostMapping("/sell_market_trades")
-    Order submitSellMarketTrade(@RequestParam double size){
-        Order order = book.sendMarketSellOrder(size);
-        return order;
+    @PostMapping("/trades")
+    Order submitBuyTrade(@RequestParam String buyOrSell, @RequestParam String limitOrMarket, @RequestParam double size, @RequestParam double limit){
+        if (limitOrMarket == "limit"){
+            if (buyOrSell == "buy"){
+                Order order = book.sendBuyLimitOrder(size, limit);
+                return order;
+            } else if (buyOrSell == "sell"){
+                Order order = book.sendSellLimitOrder(size, limit);
+                return order;
+            } else {
+                return null;// change to exceptions
+            }
+        } else {
+            if (buyOrSell == "buy"){
+                Order order = book.sendMarketBuyOrder(size);
+                return order;
+            } else if (buyOrSell == "sell"){
+                Order order = book.sendMarketSellOrder(size);
+                return order;
+            } else {
+                return null; // excpetion needed
+            }
+        }
     }
 
     @DeleteMapping("/trades/{id}")
