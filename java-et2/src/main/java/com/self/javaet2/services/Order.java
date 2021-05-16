@@ -22,10 +22,6 @@ public class Order {
         return buyOrSell;
     }
 
-    //public void setBuyOrSell(String buyOrSell){
-    //    this.buyOrSell = buyOrSell;
-    //}
-
     public double getQuantity(){
         return quantity;
     }
@@ -38,17 +34,9 @@ public class Order {
         return price;
     }
 
-    //public void setPrice(double price){
-    //    this.price = price;
-    //}
-
     public int getTradeId(){
         return tradeId;
     }
-
-    //public void setTradeId(int tradeId){
-    //    this.tradeId = tradeId;
-    //}
 
     public Instant getEntryTime(){
         return entryTime;
