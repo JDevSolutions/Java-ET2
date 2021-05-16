@@ -13,6 +13,7 @@ import java.util.TreeMap;
 
 @Service
 public class OrderBook {
+
     private static int MAX_TRADE_ID = 0; // current largest trade id, links to Order class
     private OrderTree buys = new OrderTree();
     private OrderTree sells = new OrderTree();
