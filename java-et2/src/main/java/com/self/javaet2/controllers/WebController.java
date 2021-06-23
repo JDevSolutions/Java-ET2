@@ -46,9 +46,9 @@ public class WebController {
       }
     } else {
       if ("buy".equals(buyOrSell)) {
-        return book.sendMarketBuyOrder(size);
+        return book.sendBuyMarketOrder(size);
       } else if ("sell".equals(buyOrSell)) {
-        return book.sendMarketSellOrder(size);
+        return book.sendSellMarketOrder(size);
       } else {
         return null; // excpetion needed
       }
