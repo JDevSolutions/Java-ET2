@@ -1,7 +1,7 @@
 POST http://localhost:8080/trades
 Content-Type: application/x-www-form-urlencoded
 
-buyOrSell=buy&limitOrMarket=limit&size=1&limit=2
+buyOrSell=buy&limitOrMarket=limit&size=1&limit=3
 
 ###
 GET http://localhost:8080/trades
@@ -9,4 +9,12 @@ Accept: application/json
 
 ###
 
+GET http://localhost:8080/trades/min_buy
+Accept: application/json
 
+###
+
+GET http://localhost:8080/trades/max_sell
+Accept: application/json
+
+###
