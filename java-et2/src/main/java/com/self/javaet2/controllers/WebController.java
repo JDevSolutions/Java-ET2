@@ -1,5 +1,7 @@
 package com.self.javaet2.controllers;
 
+import static java.lang.String.format;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.self.javaet2.services.Order;
 import com.self.javaet2.services.OrderBook;
@@ -34,7 +36,7 @@ public class WebController {
   }
 
   @PostMapping("/trades")
-  Order submitBuyTrade(@RequestParam String buyOrSell, @RequestParam String limitOrMarket,
+  Order addNewTrade(@RequestParam String buyOrSell, @RequestParam String limitOrMarket,
       @RequestParam double size, @RequestParam double limit) {
     if ("limit".equalsIgnoreCase(limitOrMarket)) {
       if ("buy".equalsIgnoreCase(buyOrSell)) {
@@ -42,7 +44,8 @@ public class WebController {
       } else if ("sell".equals(buyOrSell)) {
         return book.sendSellLimitOrder(size, limit);
       } else {
-        return null;// change to exceptions
+        final String message = format("buyOrSell: %s, limitOrMarket: %s", buyOrSell, limitOrMarket);
+        throw new IllegalArgumentException(message);
       }
     } else {
       if ("buy".equals(buyOrSell)) {
@@ -50,7 +53,8 @@ public class WebController {
       } else if ("sell".equals(buyOrSell)) {
         return book.sendSellMarketOrder(size);
       } else {
-        return null; // excpetion needed
+        final String message = format("buyOrSell: %s, limitOrMarket: %s", buyOrSell, limitOrMarket);
+        throw new IllegalArgumentException(message);
       }
     }
   }

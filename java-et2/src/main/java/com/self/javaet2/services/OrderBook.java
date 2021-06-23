@@ -26,14 +26,6 @@ public class OrderBook {
     reset();
   }
 
-  public static int getMinTradeId() {
-    return MAX_TRADE_ID;
-  }
-
-  public static void setMinTradeId(int id) {
-    MAX_TRADE_ID = id;
-  }
-
   public void reset() {
     buys.reset();
     sells.reset();
@@ -79,8 +71,9 @@ public class OrderBook {
   }
 
   private int newTradeId() {
-    MAX_TRADE_ID += 1;
-    return MAX_TRADE_ID;
+    final int temp = MAX_TRADE_ID;
+    MAX_TRADE_ID = temp + 1;
+    return temp;
   }
 
   public Order sendSellLimitOrder(double size, double limit) {
