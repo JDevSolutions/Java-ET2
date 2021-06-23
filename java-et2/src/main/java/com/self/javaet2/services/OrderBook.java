@@ -182,32 +182,10 @@ public class OrderBook {
     }
 
     public String printOrderBook() throws JsonProcessingException {
-        /*
-        System.out.println("ORDER BOOK");
-        System.out.println("----------------------------------");
-        System.out.println("BUYS:");
-        */
         TreeMap<Double, LinkedList<Order>> buysPriceTree = buys.getPriceMap();
-        /*
-        for (Map.Entry<Double, LinkedList<Order>> entry: buysPriceTree.entrySet()){
-            for (int i = 0; i < entry.getValue().size(); i++){
-                //System.out.println("ID: "+ entry.getValue().get(i).getTradeId() + " , " + "Price: " + entry.getValue().get(i).getPrice() + " , " + "Quantity: " + entry.getValue().get(i).getQuantity());
-            }
-            //System.out.println("---------------------------------------");
-        }
 
-        System.out.println("---------------------------------------");
-        System.out.println("SELLS:");
-        */
         TreeMap<Double, LinkedList<Order>> sellsPriceTree = sells.getPriceMap();
-        /*
-        for (Map.Entry<Double, LinkedList<Order>> entry: sellsPriceTree.entrySet()){
-            for (int i = 0; i < entry.getValue().size(); i++){
-                System.out.println("ID: " + entry.getValue().get(i).getTradeId() + " , " +"Price: " + entry.getValue().get(i).getPrice() + " , " + "Quantity: " + entry.getValue().get(i).getQuantity());
-            }
-            System.out.println("---------------------------------------");
-        }
-        */
+
         // write the order book to a json string
         ObjectMapper mapper = new ObjectMapper();
         String jsonBuys = mapper.writeValueAsString(buysPriceTree);
