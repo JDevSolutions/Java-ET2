@@ -11,10 +11,9 @@ import java.util.TreeMap;
  */
 public class OrderTree {
 
-  private TreeMap<Double, LinkedList<Order>> priceTree = new TreeMap<>();
-  private HashMap<Double, LinkedList<Order>> priceMap = new HashMap<>();
-  private HashMap<Integer, Order> orderMap = new HashMap<>();
-  private int depth;
+  private final TreeMap<Double, LinkedList<Order>> priceTree = new TreeMap<>();
+  private final HashMap<Double, LinkedList<Order>> priceMap = new HashMap<>();
+  private final HashMap<Integer, Order> orderMap = new HashMap<>();
 
   public OrderTree() {
     reset();
@@ -23,13 +22,11 @@ public class OrderTree {
   public void reset() {
     this.priceTree.clear();
     this.priceMap.clear();
-    this.depth = 0;
   }
 
   public void addOrder(Order quote) {
     double qPrice = quote.getPrice();
     if (!priceMap.containsKey(qPrice)) {
-      depth += 1; // new price means new price level, hences depth increases
       LinkedList<Order> queue = new LinkedList<>();
       priceTree.put(qPrice, queue);
       priceMap.put(qPrice, queue);
@@ -52,7 +49,6 @@ public class OrderTree {
     if (priceList.size() == 0) { // if no more orders at price level delete this price level
       priceTree.remove(order.getPrice());
       priceMap.remove(order.getPrice());
-      depth -= 1;
     }
     orderMap.remove(id);
   }
@@ -74,7 +70,7 @@ public class OrderTree {
 
   // find max price level in the OrderTree
   public Double maxPrice() {
-    if (depth > 0) {
+    if (getDepth() > 0) {
       return priceTree.lastKey();
     } else {
       return null;
@@ -83,7 +79,7 @@ public class OrderTree {
 
   // find min price level in the OrderTree
   public Double minPrice() {
-    if (depth > 0) {
+    if (getDepth() > 0) {
       return priceTree.firstKey();
     } else {
       return null;
@@ -97,28 +93,24 @@ public class OrderTree {
 
   // retrieve the order list for the max price
   public LinkedList<Order> maxPriceList() {
-    if (depth > 0) {
+    if (getDepth() > 0) {
       return getQuoteList(maxPrice());
     } else {
-      return null;
+      return new LinkedList<>();
     }
   }
 
   // retrieve the order list for the min price
   public LinkedList<Order> minPriceList() {
-    if (depth > 0) {
+    if (getDepth() > 0) {
       return getQuoteList(minPrice());
     } else {
-      return null;
+      return new LinkedList<>();
     }
   }
 
   public int getDepth() {
-    return depth;
-  }
-
-  public void setDepth(int depth) {
-    this.depth = depth;
+    return this.priceMap.size();
   }
 
   public TreeMap<Double, LinkedList<Order>> getPriceMap() {

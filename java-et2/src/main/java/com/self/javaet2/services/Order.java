@@ -4,23 +4,22 @@ import java.time.Instant;
 
 public class Order {
 
-  private final String buyOrSell;
+  private final TradeAction tradeAction;
   private final double price;
   private final Instant entryTime; // time Order is created
   private final int tradeId;
   private double quantity;
 
-  Order(String buyOrSell, double quantity, double price) {
+  Order(int tradeId, TradeAction tradeAction, double quantity, double price) {
     this.entryTime = Instant.now();
     this.quantity = quantity;
     this.price = price;
-    this.buyOrSell = buyOrSell;
-    this.tradeId = OrderBook.getMinTradeId() + 1;
-    OrderBook.setMinTradeId(this.tradeId);
+    this.tradeAction = tradeAction;
+    this.tradeId = tradeId;
   }
 
-  public String getBuyOrSell() {
-    return buyOrSell;
+  public TradeAction getTradeAction() {
+    return tradeAction;
   }
 
   public double getQuantity() {

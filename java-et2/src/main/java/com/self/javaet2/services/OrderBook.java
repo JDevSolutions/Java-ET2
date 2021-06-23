@@ -1,5 +1,8 @@
 package com.self.javaet2.services;
 
+import static com.self.javaet2.services.TradeAction.BUY;
+import static com.self.javaet2.services.TradeAction.SELL;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.LinkedList;
@@ -39,7 +42,7 @@ public class OrderBook {
 
   public Order sendBuyLimitOrder(double size, double limit) {
     //create new order
-    Order newOrder = new Order("buy", size, limit);
+    Order newOrder = new Order(newTradeId(), BUY, size, limit);
 
     // iterates over the OrderBook checking off possible trades
     while (size > 0 && sells.getDepth() > 0 && sells.minPrice() != null && limit >= sells
@@ -72,8 +75,13 @@ public class OrderBook {
     return newOrder;
   }
 
+  private int newTradeId() {
+    MAX_TRADE_ID += 1;
+    return MAX_TRADE_ID;
+  }
+
   public Order sendSellLimitOrder(double size, double limit) {
-    Order newOrder = new Order("sell", size, limit);
+    Order newOrder = new Order(newTradeId(), SELL, size, limit);
 
     while (size > 0 && buys.getDepth() > 0 && buys.maxPrice() != null && buys.maxPrice() >= limit) {
       LinkedList<Order> curList = buys.maxPriceList();
@@ -104,7 +112,7 @@ public class OrderBook {
   }
 
   public Order sendMarketBuyOrder(double size) {
-    Order newOrder = new Order("buy", size,
+    Order newOrder = new Order(newTradeId(), BUY, size,
         Double.POSITIVE_INFINITY); //limit is positive infinity as market order will "walk the book"
 
     // iterate through the book, ticking off trades that are possible, up to the size specified in the function
@@ -134,7 +142,7 @@ public class OrderBook {
   }
 
   public Order sendMarketSellOrder(double size) {
-    Order newOrder = new Order("sell", size, -Double.POSITIVE_INFINITY);
+    Order newOrder = new Order(newTradeId(), SELL, size, -Double.POSITIVE_INFINITY);
 
     while (size > 0 && buys.getDepth() > 0) {
       LinkedList<Order> curList = buys.maxPriceList();
@@ -177,13 +185,11 @@ public class OrderBook {
   }
 
   public Order updateBuyOrder(int id, double quantity) {
-    Order updatedOrder = buys.updateOrder(id, quantity);
-    return updatedOrder;
+    return buys.updateOrder(id, quantity);
   }
 
   public Order updateSellOrder(int id, double quantity) {
-    Order updatedOrder = sells.updateOrder(id, quantity);
-    return updatedOrder;
+    return sells.updateOrder(id, quantity);
   }
 
   public String printOrderBook() throws JsonProcessingException {
